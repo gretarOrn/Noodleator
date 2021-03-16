@@ -1,6 +1,8 @@
 using MongoDB.Driver;
 using System.Collections.Generic;
 using Noodleator.Models;
+using MongoDB.Driver.Linq;
+
 namespace Noodleator.Services
 {
     public class NicknameService
@@ -13,6 +15,10 @@ namespace Noodleator.Services
             var database = client.GetDatabase(settings.DatabaseName);
             _nicknames = database.GetCollection<Nickname>("nicknames");
         }
+
+        public Nickname GetRandomByName(string name) => 
+            _nicknames.AsQueryable().Where(n => n.Noodle == name).Sample(1).FirstOrDefault();
+
 
         public List<Nickname> Get() =>
             _nicknames.Find(nick => true).ToList();

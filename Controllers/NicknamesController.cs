@@ -20,6 +20,9 @@ namespace Noodleator.Controllers
             _nickSvc = nicknameService;
         }
 
+        [HttpGet("random/{name}")]
+        public ActionResult<Nickname> Random(string name) => _nickSvc.GetRandomByName(name);
+
         [HttpGet]
         public ActionResult<List<Nickname>> Get() => _nickSvc.Get();
 
@@ -48,9 +51,9 @@ namespace Noodleator.Controllers
         }
 
         [HttpPut("{id:length(24)}")]
-        public ActionResult Update(Nickname nicknameUpdated)
+        public ActionResult Update(Nickname nicknameIn)
         {
-            var nickname = _nickSvc.Get(nicknameUpdated.Id);
+            var nickname = _nickSvc.Get(nicknameIn.Id);
 
             if (nickname == null)
             {
@@ -59,12 +62,12 @@ namespace Noodleator.Controllers
 
             if (ModelState.IsValid)
             {
-                nicknameUpdated.LastUpdated = DateTime.Now;
-                nicknameUpdated.Created = nickname.Created.ToLocalTime(); /// gert til að koma í veg fyrir að mongodb fucki upp dagsetningunni
-                _nickSvc.Update(nicknameUpdated);
+                nicknameIn.LastUpdated = DateTime.Now;
+                nicknameIn.Created = nickname.Created.ToLocalTime(); /// gert til að koma í veg fyrir að mongodb fucki upp dagsetningunni
+                _nickSvc.Update(nicknameIn);
             }
 
-            return CreatedAtRoute("GetNickname", new { id = nicknameUpdated.Id.ToString() }, nicknameUpdated);
+            return CreatedAtRoute("GetNickname", new { id = nicknameIn.Id.ToString() }, nicknameIn);
 
         }
 

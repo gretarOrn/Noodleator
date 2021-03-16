@@ -31,6 +31,7 @@ namespace Noodleator
             services.AddControllersWithViews();
 
             services.AddSingleton<NicknameService>();
+            services.AddSingleton<QuestionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
