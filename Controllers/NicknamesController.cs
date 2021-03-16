@@ -68,6 +68,21 @@ namespace Noodleator.Controllers
 
         }
 
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
+        {
+            var nickname = _nickSvc.Get(id);
+
+            if (nickname == null)
+            {
+                return NotFound();
+            }
+
+            _nickSvc.Delete(id);
+
+            return NoContent();
+        }
+
     }
 }
 
