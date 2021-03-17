@@ -21,7 +21,10 @@ namespace Noodleator.Controllers
         }
 
         [HttpGet("random/{name}")]
-        public ActionResult<Nickname> Random(string name) => _nickSvc.GetRandomByName(name);
+        public ActionResult<Nickname> Random(string name)
+        {
+            return _nickSvc.GetRandomByName(name);
+        }
 
         [HttpGet]
         public ActionResult<List<Nickname>> Get() => _nickSvc.Get();
