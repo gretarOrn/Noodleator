@@ -3,6 +3,8 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Noodleator.Models;
 
+// TODO: check for duplicates when posting
+
 namespace Noodleator.Services
 {
     public class QuestionService
@@ -16,7 +18,7 @@ namespace Noodleator.Services
             _questions = database.GetCollection<Question>("questions");
         }
 
-        public Question Random() => 
+        public Question Random() =>
             _questions.AsQueryable().Sample(1).FirstOrDefault();
         public List<Question> Get() =>
             _questions.Find(quest => true).ToList();

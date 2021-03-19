@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Noodleator.Models;
 using MongoDB.Driver.Linq;
 
+
+// TODO: check for duplicates when posting
+
 namespace Noodleator.Services
 {
     public class NicknameService
@@ -16,7 +19,7 @@ namespace Noodleator.Services
             _nicknames = database.GetCollection<Nickname>("nicknames");
         }
 
-        public Nickname GetRandomByName(string name) => 
+        public Nickname GetRandomByName(string name) =>
             _nicknames.AsQueryable().Where(n => n.Noodle == name).Sample(1).FirstOrDefault();
 
 
